@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phylum Quest - HTML5 Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f0f8ff; }
+    #question { font-size: 24px; margin: 20px; }
+    .option { padding: 10px; margin: 5px; background-color: #dcdcdc; cursor: pointer; }
+    .option:hover { background-color: #a9a9a9; }
+  </style>
+</head>
+<body>
+  <h1>Phylum Quest</h1>
+  <div id="question"></div>
+  <div id="options"></div>
+  <div id="score">Score: 0</div>
+
+  <script>
+    const questions = [
+      {
+        question: "Which phylum has organisms with spicules and a canal system?",
+        options: ["Mollusca", "Porifera", "Cnidaria", "Annelida"],
+        answer: 1
+      },
+      {
+        question: "Roundworms belong to which phylum?",
+        options: ["Annelida", "Nematoda", "Platyhelminthes", "Mollusca"],
+        answer: 1
+      },
+      {
+        question: "Which phylum has a water vascular system?",
+        options: ["Cnidaria", "Echinodermata", "Mollusca", "Porifera"],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = '';
+
+      q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.classList.add("option");
+        btn.onclick = () => checkAnswer(index);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correctAnswer = questions[currentQuestion].answer;
+      if (selected === correctAnswer) {
+        score++;
+        alert("Correct! 🎉");
+      } else {
+        alert("Wrong! ❌");
+      }
+
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        alert(`Game Over! Your final score is: ${score}`);
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
